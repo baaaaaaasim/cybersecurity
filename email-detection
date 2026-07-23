@@ -1,0 +1,59 @@
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("===== PHISHING EMAIL DETECTOR =====");
+
+        System.out.println("Enter Email Content:");
+        String email = sc.nextLine().toLowerCase();
+
+        int score = 0;
+
+        String[] keywords = {
+                "click here",
+                "verify",
+                "password",
+                "bank",
+                "urgent",
+                "winner",
+                "free",
+                "account suspended",
+                "login",
+                "update"
+        };
+
+        for (String word : keywords) {
+            if (email.contains(word)) {
+                score++;
+            }
+        }
+
+        if (email.contains("http://") || email.contains("https://")) {
+            System.out.println("Suspicious URL Found");
+            score++;
+        }
+
+        if (email.contains(".xyz") || email.contains(".ru")) {
+            System.out.println("Suspicious Domain Found");
+            score++;
+        }
+
+        System.out.println("\n----- RESULT -----");
+
+        if (score >= 3) {
+            System.out.println("Email Status : PHISHING");
+            System.out.println("Risk Level   : HIGH");
+        } else {
+            System.out.println("Email Status : SAFE");
+            System.out.println("Risk Level   : LOW");
+        }
+
+        System.out.println("Phishing Score : " + score);
+
+        sc.close();
+    }
+}
